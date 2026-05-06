@@ -2,6 +2,8 @@
   "name": "bullseye",
   "version": "1.0.0",
   "dependencies": {
+    "satori": "^0.10.13",
+    "@resvg/resvg-js": "^2.6.0",
     "sharp": "^0.33.4"
   }
 }
