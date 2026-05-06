@@ -17,29 +17,47 @@ module.exports = async (req, res) => {
     'https://github.com/FTBQ/BY/raw/refs/heads/main/BMDOHYEON_ttf.ttf'
   ).then(r => r.arrayBuffer());
 
-  // JSX 없이 satori 객체 방식으로 작성
+  // ===== 좌표 기준값 =====
+  const LEFT_A = 270;
+  const LEFT_B = 870;
+
+  const TOP_HEADER = 68;
+  const HEADER_GAP = 70;
+
+  const BLOCK_TITLE_GAP = 40;
+
+  // ===== SVG 생성 =====
   const svg = await satori(
     {
       type: 'div',
       props: {
-        style: { display: 'flex', width: '1200px', height: '500px', position: 'relative' },
+        style: {
+          display: 'flex',
+          width: '1200px',
+          height: '500px',
+          position: 'relative'
+        },
         children: [
-          // 상단 4개
-          el(date, 310, 66,  16, 'white'),
-          el(time, 310, 132, 16, 'white'),
-          el(loc,  870, 66,  16, 'white'),
-          el(job,  870, 132, 16, 'white'),
+          // 상단
+          el(date, 310, TOP_HEADER, 17),
+          el(time, 310, TOP_HEADER + HEADER_GAP, 17),
+          el(loc,  950, TOP_HEADER, 17),
+          el(job,  950, TOP_HEADER + HEADER_GAP, 17),
+
           // 세이길로스
-          el(SN, 210, 256, 20, 'white', 'bold'),
-          el(SI, 210, 284, 13, '#cccccc'),
+          el(SN, LEFT_A, 268, 22, 'white', 'bold'),
+          el(SI, LEFT_A, 268 + BLOCK_TITLE_GAP, 14, '#dddddd'),
+
           // 로스트 페이퍼
-          el(LN, 720, 256, 20, 'white', 'bold'),
-          el(LI, 720, 284, 13, '#cccccc'),
+          el(LN, LEFT_B, 268, 22, 'white', 'bold'),
+          el(LI, LEFT_B, 268 + BLOCK_TITLE_GAP, 14, '#dddddd'),
+
           // 속하지 않은자
-          el(NI, 210, 414, 13, '#cccccc'),
+          el(NI, LEFT_A, 458, 14, '#dddddd'),
+
           // 보리소프 패밀리
-          el(BN, 720, 394, 20, 'white', 'bold'),
-          el(BI, 720, 422, 13, '#cccccc'),
+          el(BN, LEFT_B, 418, 22, 'white', 'bold'),
+          el(BI, LEFT_B, 418 + BLOCK_TITLE_GAP, 14, '#dddddd'),
         ]
       }
     },
@@ -53,9 +71,11 @@ module.exports = async (req, res) => {
     }
   );
 
+  // SVG → PNG
   const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } });
   const textPng = resvg.render().asPng();
 
+  // 합성
   const output = await sharp(imgBuffer)
     .composite([{ input: Buffer.from(textPng), top: 0, left: 0 }])
     .png()
@@ -66,7 +86,8 @@ module.exports = async (req, res) => {
   res.end(output);
 };
 
-function el(content, x, y, size, color, weight = 'normal') {
+// ===== 텍스트 엘리먼트 =====
+function el(content, x, y, size, color = 'white', weight = 'normal') {
   return {
     type: 'div',
     props: {
@@ -80,7 +101,7 @@ function el(content, x, y, size, color, weight = 'normal') {
         fontFamily: 'MyFont',
         whiteSpace: 'nowrap',
       },
-      children: content,
+      children: content || '',
     }
   };
 }
