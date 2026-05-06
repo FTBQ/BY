@@ -1,58 +1,61 @@
-const { createCanvas, loadImage, registerFont } = require('@napi-rs/canvas');
+const sharp = require('sharp');
 
 module.exports = async (req, res) => {
-  const { date='', time='', loc='', job='', SN='', SI='', LN='', LI='', NI='', BN='', BI='' } = req.query;
+  const {
+    date='', time='', loc='', job='',
+    SN='', SI='', LN='', LI='', NI='', BN='', BI=''
+  } = req.query;
 
-  // 이미지 로드
-  const baseImg = await loadImage('https://github.com/FTBQ/BY/blob/main/ST.png?raw=true');
+  // 이미지 다운로드
+  const imgRes = await fetch('https://raw.githubusercontent.com/FTBQ/BY/refs/heads/main/ST.png');
+  const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
 
-  const canvas = createCanvas(1200, 500);
-  const ctx = canvas.getContext('2d');
+  // SVG 텍스트 레이어 생성
+  const svg = `
+  <svg width="1200" height="500" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      text { font-family: Arial, sans-serif; fill: white; }
+    </style>
 
-  // 배경 이미지 그리기
-  ctx.drawImage(baseImg, 0, 0, 1200, 500);
+    <!-- 상단 4개 -->
+    <text x="310" y="85"  font-size="17">${escXml(date)}</text>
+    <text x="310" y="155" font-size="17">${escXml(time)}</text>
+    <text x="950" y="85"  font-size="17">${escXml(loc)}</text>
+    <text x="950" y="155" font-size="17">${escXml(job)}</text>
 
-  // 공통 텍스트 설정
-  ctx.fillStyle = '#ffffff';
+    <!-- 세이길로스 블록 -->
+    <text x="270" y="290" font-size="22" font-weight="bold">${escXml(SN)}</text>
+    <text x="270" y="320" font-size="14" fill="#dddddd">${escXml(SI)}</text>
 
-  // 상단 4개
-  ctx.font = '17px sans-serif';
-  ctx.fillText(date, 310, 85);
-  ctx.fillText(time, 310, 155);
-  ctx.fillText(loc,  950, 85);
-  ctx.fillText(job,  950, 155);
+    <!-- 로스트 페이퍼 블록 -->
+    <text x="870" y="290" font-size="22" font-weight="bold">${escXml(LN)}</text>
+    <text x="870" y="320" font-size="14" fill="#dddddd">${escXml(LI)}</text>
 
-  // 세이길로스 블록
-  ctx.font = 'bold 22px sans-serif';
-  ctx.fillText(SN, 270, 290);
-  ctx.font = '14px sans-serif';
-  ctx.fillStyle = '#dddddd';
-  ctx.fillText(SI, 270, 320);
+    <!-- 속하지 않은자 블록 -->
+    <text x="270" y="470" font-size="14" fill="#dddddd">${escXml(NI)}</text>
 
-  // 로스트 페이퍼 블록
-  ctx.font = 'bold 22px sans-serif';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText(LN, 870, 290);
-  ctx.font = '14px sans-serif';
-  ctx.fillStyle = '#dddddd';
-  ctx.fillText(LI, 870, 320);
+    <!-- 보리소프 패밀리 블록 -->
+    <text x="870" y="440" font-size="22" font-weight="bold">${escXml(BN)}</text>
+    <text x="870" y="470" font-size="14" fill="#dddddd">${escXml(BI)}</text>
+  </svg>`;
 
-  // 속하지 않은자 블록
-  ctx.font = '14px sans-serif';
-  ctx.fillStyle = '#dddddd';
-  ctx.fillText(NI, 270, 470);
+  const svgBuffer = Buffer.from(svg);
 
-  // 보리소프 패밀리 블록
-  ctx.font = 'bold 22px sans-serif';
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText(BN, 870, 440);
-  ctx.font = '14px sans-serif';
-  ctx.fillStyle = '#dddddd';
-  ctx.fillText(BI, 870, 470);
+  // sharp로 이미지 위에 SVG 합성
+  const output = await sharp(imgBuffer)
+    .composite([{ input: svgBuffer, top: 0, left: 0 }])
+    .png()
+    .toBuffer();
 
-  // PNG로 반환
-  const buffer = await canvas.encode('png');
   res.setHeader('Content-Type', 'image/png');
   res.setHeader('Cache-Control', 'no-cache');
-  res.end(buffer);
+  res.end(output);
 };
+
+function escXml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
