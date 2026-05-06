@@ -25,21 +25,21 @@ module.exports = async (req, res) => {
         style: { display: 'flex', width: '1200px', height: '500px', position: 'relative' },
         children: [
          /* 상단 4개 */
-        el(date, 310, 68, 17, 'white'),
-        el(time, 310, 138, 17, 'white'),
-        el(loc,  950, 68, 17, 'white'),
-        el(job,  950, 138, 17, 'white'),
+        el(date, 300, 55, 17, 'white'),
+        el(time, 300, 110, 17, 'white'),
+        el(loc,  780, 55, 17, 'white'),
+        el(job,  780, 110, 17, 'white'),
         /* 세이길로스 */
-        el(SN, 270, 268, 22, 'white', 'bold'),
-        el(SI, 270, 308, 14, '#dddddd'),
+        el(SN, 430, 195, 22, 'white', 'bold'),
+        el(SI, 135, 248, 14, '#dddddd'),
         /* 로스트 페이퍼 */
-        el(LN, 870, 268, 22, 'white', 'bold'),
-        el(LI, 870, 308, 14, '#dddddd'),
+        el(LN, 960, 195, 22, 'white', 'bold'),
+        el(LI, 600, 248, 14, '#dddddd'),
         /* 속하지 않은자 */
-        el(NI, 270, 458, 14, '#dddddd'),
+        el(NI, 135, 390, 14, '#dddddd'),
         /* 보리소프 패밀리 */
-        el(BN, 170, 418, 22, 'white', 'bold'),
-        el(BI, 870, 458, 14, '#dddddd'),
+        el(BN, 980, 336, 22, 'white', 'bold'),
+        el(BI, 600, 390, 14, '#dddddd'),
         ]
       }
     },
