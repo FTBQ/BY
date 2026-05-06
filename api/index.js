@@ -67,6 +67,8 @@ module.exports = async (req, res) => {
 };
 
 function el(content, x, y, size, color, weight = 'normal') {
+  const lines = String(content).split('\n');
+
   return {
     type: 'div',
     props: {
@@ -78,9 +80,15 @@ function el(content, x, y, size, color, weight = 'normal') {
         color: color,
         fontWeight: weight,
         fontFamily: 'MyFont',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'pre-wrap',
+        lineHeight: '1.4',
       },
-      children: content,
+      children: lines.map((line, i) => ({
+        type: 'div',
+        props: {
+          children: line
+        }
+      }))
     }
   };
 }
