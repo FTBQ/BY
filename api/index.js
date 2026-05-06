@@ -76,16 +76,18 @@ function el(content, x, y, size, color, weight = 'normal') {
         position: 'absolute',
         left: x + 'px',
         top: y + 'px',
+        display: 'flex',
+        flexDirection: 'column',
         fontSize: size + 'px',
         color: color,
         fontWeight: weight,
         fontFamily: 'MyFont',
-        whiteSpace: 'pre-wrap',
         lineHeight: '1.4',
       },
-      children: lines.map((line, i) => ({
+      children: lines.map(line => ({
         type: 'div',
         props: {
+          style: { display: 'flex' }, // 이것도 안전하게 넣어줌
           children: line
         }
       }))
