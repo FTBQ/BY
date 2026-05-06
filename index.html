@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bullseye</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      position: relative;
+      width: 1200px;
+      height: 500px;
+      flex-shrink: 0;
+    }
+
+    .container img {
+      width: 1200px;
+      height: 500px;
+      display: block;
+    }
+
+    .label {
+      position: absolute;
+      color: #ffffff;
+      font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* 상단 4개 */
+    #date { top: 68px;  left: 310px; font-size: 17px; }
+    #time { top: 138px; left: 310px; font-size: 17px; }
+    #loc  { top: 68px;  left: 950px; font-size: 17px; }
+    #job  { top: 138px; left: 950px; font-size: 17px; }
+
+    /* 세이길로스 블록 */
+    #SN { top: 268px; left: 270px; font-size: 22px; font-weight: 700; }
+    #SI { top: 308px; left: 270px; font-size: 14px; color: #dddddd; }
+
+    /* 로스트 페이퍼 블록 */
+    #LN { top: 268px; left: 870px; font-size: 22px; font-weight: 700; }
+    #LI { top: 308px; left: 870px; font-size: 14px; color: #dddddd; }
+
+    /* 속하지 않은자 블록 */
+    #NI { top: 458px; left: 270px; font-size: 14px; color: #dddddd; }
+
+    /* 보리소프 패밀리 블록 */
+    #BN { top: 418px; left: 870px; font-size: 22px; font-weight: 700; }
+    #BI { top: 458px; left: 870px; font-size: 14px; color: #dddddd; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://github.com/FTBQ/BY/blob/main/ST.png?raw=true" alt="base">
+
+    <span class="label" id="date"></span>
+    <span class="label" id="time"></span>
+    <span class="label" id="loc"></span>
+    <span class="label" id="job"></span>
+
+    <span class="label" id="SN"></span>
+    <span class="label" id="SI"></span>
+
+    <span class="label" id="LN"></span>
+    <span class="label" id="LI"></span>
+
+    <span class="label" id="NI"></span>
+
+    <span class="label" id="BN"></span>
+    <span class="label" id="BI"></span>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    ['date','time','loc','job','SN','SI','LN','LI','NI','BN','BI'].forEach(id => {
+      const val = params.get(id);
+      if (val) document.getElementById(id).textContent = val;
+    });
+  </script>
+</body>
+</html>
