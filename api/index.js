@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
         style: { display: 'flex', width: '1200px', height: '500px', position: 'relative' },
         children: [
          /* 상단 4개 */
-        el(date, 310, 10, 17, 'white'),
+        el(date, 310, 68, 17, 'white'),
         el(time, 310, 138, 17, 'white'),
         el(loc,  950, 68, 17, 'white'),
         el(job,  950, 138, 17, 'white'),
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
         /* 속하지 않은자 */
         el(NI, 270, 458, 14, '#dddddd'),
         /* 보리소프 패밀리 */
-        el(BN, 870, 418, 22, 'white', 'bold'),
+        el(BN, 170, 418, 22, 'white', 'bold'),
         el(BI, 870, 458, 14, '#dddddd'),
         ]
       }
