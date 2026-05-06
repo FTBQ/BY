@@ -34,12 +34,12 @@ module.exports = async (req, res) => {
         el(SI, 135, 248, 14, '#dddddd'),
         /* 로스트 페이퍼 */
         el(LN, 960, 195, 22, 'white', 'bold'),
-        el(LI, 600, 248, 14, '#dddddd'),
+        el(LI, 610, 248, 14, '#dddddd'),
         /* 속하지 않은자 */
         el(NI, 135, 390, 14, '#dddddd'),
         /* 보리소프 패밀리 */
         el(BN, 980, 336, 22, 'white', 'bold'),
-        el(BI, 600, 390, 14, '#dddddd'),
+        el(BI, 610, 390, 14, '#dddddd'),
         ]
       }
     },
