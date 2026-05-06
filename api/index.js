@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
          /* 상단 4개 */
         el(date, 300, 55, 17, 'white'),
         el(time, 300, 110, 17, 'white'),
-        el(loc,  780, 55, 17, 'white'),
+        el(loc,  55, 780, 17, 'white'),
         el(job,  780, 110, 17, 'white'),
         /* 세이길로스 */
         el(SN, 430, 195, 22, 'white', 'bold'),
