@@ -24,22 +24,22 @@ module.exports = async (req, res) => {
       props: {
         style: { display: 'flex', width: '1200px', height: '500px', position: 'relative' },
         children: [
-          // 상단 4개
-          el(date, 310, 66,  16, 'white'),
-          el(time, 310, 132, 16, 'white'),
-          el(loc,  870, 66,  16, 'white'),
-          el(job,  870, 132, 16, 'white'),
-          // 세이길로스
-          el(SN, 210, 256, 20, 'white', 'bold'),
-          el(SI, 210, 284, 13, '#cccccc'),
-          // 로스트 페이퍼
-          el(LN, 720, 256, 20, 'white', 'bold'),
-          el(LI, 720, 284, 13, '#cccccc'),
-          // 속하지 않은자
-          el(NI, 210, 414, 13, '#cccccc'),
-          // 보리소프 패밀리
-          el(BN, 720, 394, 20, 'white', 'bold'),
-          el(BI, 720, 422, 13, '#cccccc'),
+         /* 상단 4개 */
+        el(date, 310, 68, 17, 'white'),
+        el(time, 310, 138, 17, 'white'),
+        el(loc,  950, 68, 17, 'white'),
+        el(job,  950, 138, 17, 'white'),
+        /* 세이길로스 */
+        el(SN, 270, 268, 22, 'white', 'bold'),
+        el(SI, 270, 308, 14, '#dddddd'),
+        /* 로스트 페이퍼 */
+        el(LN, 870, 268, 22, 'white', 'bold'),
+        el(LI, 870, 308, 14, '#dddddd'),
+        /* 속하지 않은자 */
+        el(NI, 270, 458, 14, '#dddddd'),
+        /* 보리소프 패밀리 */
+        el(BN, 870, 418, 22, 'white', 'bold'),
+        el(BI, 870, 458, 14, '#dddddd'),
         ]
       }
     },
